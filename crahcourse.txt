@@ -1,0 +1,78 @@
+1. pyproject.toml là gì?
+--------------------------
+- TOML (Tom’s Obvious, Minimal Language): Là định dạng file cấu hình đơn giản, dễ đọc và ghi (giống JSON hoặc YAML).
+- Trở thành chuẩn mới cho metadata trong dự án Python.
+- Được giới thiệu qua PEP 518 để thay thế dần setup.py, giúp cấu hình dự án gọn và linh hoạt hơn.
+
+2. Vai trò quan trọng của pyproject.toml:
+-------------------------------------------
+- Giúp xây dựng gói Python hiện đại hơn.
+- Cho phép dùng các hệ thống build khác nhau (như setuptools, poetry,...).
+- Trung tâm lưu metadata dự án: tên, phiên bản, tác giả, dependencies,...
+
+3. Các phần trong pyproject.toml:
+-----------------------------------
+[project]: Thông tin dự án (name, version, description, authors).
+[tool.setuptools]: Chỉ định dùng setuptools để build.
+[tool.setuptools.dynamic]: Kết nối với file requirements.txt để lấy dependencies động.
+
+4. setup.py trong thời đại pyproject.toml:
+--------------------------------------------
+- setup.py vẫn được hỗ trợ, dùng cho các bước build phức tạp.
+- Tuy nhiên, phần lớn metadata đã chuyển sang pyproject.toml.
+
+5. Mối quan hệ giữa setup.py, pyproject.toml và requirements.txt:
+--------------------------------------------------------------------
+- pyproject.toml: là nơi chính để định nghĩa metadata dự án và dependencies.
+- setup.py: vẫn dùng được, nhưng không bắt buộc nếu đã có pyproject.toml.
+- requirements.txt: liệt kê thư viện cần cài. Dùng cho pip install hoặc được tham chiếu trong pyproject.toml.
+
+Ví dụ:
+[tool.setuptools.dynamic]
+dependencies = {file = "requirements.txt"}
+
+=> dependencies sẽ được lấy từ file requirements.txt.
+
+-----------------------------------------------
+Giải thích CORS (Cross-Origin Resource Sharing):
+-----------------------------------------------
+- Trình duyệt chặn yêu cầu từ origin khác (ví dụ frontend localhost:3000 → backend localhost:8000).
+- allow_origins = ["*"] nghĩa là cho phép tất cả các nguồn gọi API.
+- Cần middleware CORS để FastAPI nhận request từ mọi nơi (giúp frontend - backend giao tiếp tự do khi dev).
+
+-----------------------------------------------
+Giải thích async / await trong Python:
+-----------------------------------------------
+- async: cho phép chạy không đồng bộ, tức không cần chờ 1 task kết thúc mới làm việc khác.
+- await: tạm dừng trong function để chờ 1 thao tác (vd: nhận form, gọi API), nhưng không chặn chương trình.
+
+Ví dụ:
+async def get_vehicle_data(self):
+    form = await self.request.form()
+→ giúp app vẫn mượt, xử lý song song nhiều request.
+
+-----------------------------------------------
+Giữ GitHub Actions Runner luôn chạy trong EC2:
+-----------------------------------------------
+
+1. Vào thư mục runner:
+   cd ~/actions-runner
+
+2. Cài runner thành dịch vụ:
+   sudo ./svc.sh install
+
+3. Bắt đầu service:
+   sudo ./svc.sh start
+
+4. Kiểm tra trạng thái:
+   sudo ./svc.sh status
+
+5. Khởi động cùng hệ thống (nếu muốn):
+   sudo systemctl enable actions.runner.<runner-name>.service
+
+6. Gỡ và cài lại (nếu cần):
+   sudo ./svc.sh stop
+   sudo ./svc.sh uninstall
+   ./config.sh --url https://github.com/<tên-repo> --token <token mới>
+   sudo ./svc.sh install
+   sudo ./svc.sh start
