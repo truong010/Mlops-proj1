@@ -1,6 +1,7 @@
 tk:vuquangtruong656
 mk:A3KBcfWfkqlndymA
-mongodb+srv://vuquangtruong656:<db_password>@cluster0.lavzyrf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+mongodb+srv://vuquangtruong656:A3KBcfWfkqlndymA@cluster0.lavzyrf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0 
+$env:MONGODB_URL = "mongodb+srv://vuquangtruong656:A3KBcfWfkqlndymA
 của mogodb
 1. Create project template by executing template.py file
 2. Write the code on setup.py and pyproject.toml file to import local packages
