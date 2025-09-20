@@ -1,0 +1,142 @@
+của mogodb
+1. Tạo mẫu dự án bằng cách thực thi template.py file
+2. Viết mã vào setup.py Và pyproject.toml Tệp để nhập gói địa phương
+   >> Tìm thêm về "setup.py and pyproject.toml" Tại crashcourse.txt
+3. Tạo env ảo, kích hoạt nó và cài đặt các yêu cầu từ requirements.txt
+   conda create -n vehicle python=3.10 -y
+   conda activate vehicle
+   Thêm các mô -đun cần thiết vào requirements.txt
+   LÀM "pip install -r requirements.txt"
+4. Làm Một "pip list" trên thiết bị đầu cuối để đảm bảo bạn đã cài đặt các gói cục bộ.
+
+----------------------------------------------- MongoDB Setup -----------------------------------------------
+5. Đăng ký với MongoDB Atlas và tạo một dự án mới bằng cách chỉ cung cấp một tên sau đó tiếp theo tạo tiếp theo.
+6. Từ "Create a cluster" Màn hình, nhấn"create"Lựa chọnct M0 Dịch vụ giữ các dịch vụ khác là mặc định, nhấn "create deployment"
+7. Thiết lập tên người dùng và mật khẩu và sau đó tạo người dùng DB.
+8. Chuyển đến "Network access" và thêm địa chỉ IP - "0.0.0.0/0" để chúng tôi có thể truy cập nó từ bất cứ đâu
+9. Quay lại dự án >> "Get a series of connectivity" >> "Drivers" >> {trình điều khiển: Python, Phiên bản: 3.6 trở lên} 
+>> Sao chép và lưu chuỗi kết nối với bạn (thay thế mật khẩu). >> xong.
+10. Tạo thư mục "notebook" >>Làm bước 11>>  Tạo tệp"mongoDB_demo.ipynb" >> Chọn Kernel> Python Kernel> Car >>
+11.Tập dữ liệu được thêm vào thư mục máy tính xách tay
+12. Đẩy dữ liệu của bạn đến mongoDB Cơ sở dữ liệu từ sổ ghi chép Python của bạn.
+13. Đi đến mongoDB Atlas >> Database >> browse collection >> Xem dữ liệu của bạn ở định dạng giá trị chính
+
+-------------------------------------- logging, exception and notebooks --------------------------------------
+14. Viết tệp logger và kiểm tra nó trên demo.py
+15. Viết tệp ngoại lệ và kiểm tra nó trên demo.py
+16. EDA và tính năng máy tính xách tay Engg được thêm vào.
+
+----------------------------------------------- Data Ingestion -----------------------------------------------
+17.Trước Khia ki chún tôm lào việc " " thành phần >> khai báo các biến trong các hằng số.__init__.py Tệp >> 
+Thêm mã vào cấu hình.mongo_db_connections.py và xác định func cho kết nối Mondodb >> 
+Bên trong thư mục "data_access", thêm mã vào proj1_data sẽ sử dụng Mongo_db_connections.py 
+Để kết nối với DB, hãy tìm nạp dữ liệu ở định dạng van khóa và chuyển đổi thành DF >> 
+Thêm mã vào tập tin entity.config_entity.py cho đến khi dữ liệu classconfig >> 
+Thêm mã vào tệp entity.artifact_entity.py cho đến khi DataingestionArtifact Lớp >> 
+Thêm mã vào các thành phần.data_ingestion.py tệp >> Thêm mã vào đường ống đào tạo >> 
+chạy demo.py (đặt URL kết nối MongoDB trước, xem bước tiếp theo)
+18. To setup the connection url on mac(also work for windows), open bash/powershell terminal and run below command:
+                        *** For Bash ***
+    set: export MONGODB_URL="mongodb+srv://<username>:<password>......"
+    check: echo $MONGODB_URL
+                        *** For Powershell ***
+    set: $env:MONGODB_URL = "mongodb+srv://<username>:<password>......"
+    check: echo $env:MONGODB_URL
+
+    To setup the connection url on Windows, open env variable setting option and add a new variable:
+    Name: MONGODB_URL, Value = <url>
+    Also add "artifact" dir to .gitignore file
+
+---------------------------- Data Validation, Data Transformation & Model Trainer ----------------------------
+
+19. Complete the work on utils.main_utils.py and config.schema.yaml file (add entire info about dataset for data validation step)
+20. Now work on the "Data Validation" component the way we did in step 17 for Data Ingestion. (Workflow mentioned below)
+21. Now work on the "Data Transformation" component the way we did in above step. (add estimator.py to entity folder)
+22. Now work on the "Model Trainer" component the way we did in above step. (add class to estimator.py in entity folder)
+
+23. Trước khi chuyển sang thành phần tiếp theo của đánh giá mô hình, một số thiết lập dịch vụ AWS là cần thiết: 
+* Đăng nhập vào bảng điều khiển AWS. 
+* Giữ khu vực được đặt dưới dạng-US-East-1 
+* Chuyển đến IAM >> Tạo người dùng mới (Tên: FirstProj) 
+* Đính kèm chính sách >> Chọn Quản trị viên Thanh toán >> Tiếp theo >> Tạo người dùng 
+* Truy cập người dùng >> Thông tin bảo mật >> Khóa truy cập >> Tạo khóa truy cập 
+* Chọn CLI >> đồng ý với điều kiện >> Tiếp theo >> Tạo khóa truy cập >> Tải xuống tệp CSV 
+* Đặt các biến env với các giá trị CSV trên bằng phương thức bên dưới:   >> Set env var from bash terminal: <<
+         export AWS_ACCESS_KEY_ID="AWS_ACCESS_KEY_ID"
+         export AWS_SECRET_ACCESS_KEY="AWS_SECRET_ACCESS_KEY"
+         >> Check env var from bash terminal: <<
+         echo $AWS_ACCESS_KEY_ID
+         echo $AWS_SECRET_ACCESS_KEY
+
+         >> Set env var from powershell terminal: <<
+         $env:AWS_ACCESS_KEY_ID="AWS_ACCESS_KEY_ID"
+         $env:AWS_SECRET_ACCESS_KEY="AWS_SECRET_ACCESS_KEY"
+         >> Check env var from powershell terminal: <<
+         echo $env:AWS_ACCESS_KEY_ID
+         echo $env:AWS_SECRET_ACCESS_KEY
+      ====================================================================================
+      * Now add the access key, secret key, region name to constants.__init__.py
+      * Add code to src.configuration.aws_connection.py file (To work with AWS S3 service)
+      * Ensure below info in constants.__init__.py file:
+            MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE: float = 0.02
+            MODEL_BUCKET_NAME = "my-model-mlopsproj"
+            MODEL_PUSHER_S3_KEY = "model-registry"
+      * Go to S3 service >> Create bucket >> Region: us-east-1 >> General purpose >>
+        Bucket Name: "my-model-mlopsproj" >> uncheck: "Block all public access" and acknowledge >>
+        Hit Create Bucket
+      * Now inside "src.aws_storage" code needs to be added for the configurations needed to pull 
+        and push model from AWS S3 bucket. 
+      * Inside "entity" dir we will have an "s3_estimator.py" file containing all the func to pull/push
+        data from s3 bucket.
+
+24. Now we will start our work on "Model Evaluation" and "Model Pusher" component.
+
+25. Create the code structure of "Prediction Pipeline" and setup your app.py
+26. Thêm "Tĩnh" và "Mẫu" vào dự án.
+
+27. Bắt đầu với quy trình CI-CD: 
+* Thiết lập tệp Dockerfile và .dockerignore 
+* Thiết lập tệp .github \ Workflows Dir và Aws.yaml bên trong 
+* Truy cập bảng điều khiển AWS và tạo một người dùng IAM mới chính xác theo cách chúng tôi đã làm trước đó (tên: "usvisa-user") >> 
+Đi vào bên trong người dùng >> Thông tin bảo mật >> Khóa truy cập >> Tạo khóa truy cập >> CLI >> Kiểm tra thỏa thuận 
+>> Tiếp theo >> tạo khóa truy cập >> Tải xuống CSV 
+* Bây giờ tạo một repo ECR để lưu trữ/lưu hình ảnh Docker: 
+Bảng điều khiển AWS >> Truy cập ECR >> Vùng: US-EAST-1 >> HIT Tạo kho lưu trữ >> 
+Tên repo: Xe 
+* Bây giờ tạo máy chủ Ubuntu EC2 
+>> Hình ảnh: Ubuntu >> AMI: Ubuntu Server 24.04 (Tầng miễn phí) >> Phiên bản: T2 Medium (~ Chargable-3.5rs/Hr) 
+>> Tạo cặp khóa mới (Tên: Proj1Key) >> Cho phép lưu lượng truy cập HTTPS và HTTP >> lưu trữ: 30GB >> Khởi chạy 
+>> Chuyển đến ví dụ >> Nhấp vào "Kết nối" >> Kết nối bằng cách sử dụng Instance Connect 
+>> Kết nối (thiết bị đầu cuối sẽ được ra mắt) 
+
+28. Mở EC2 và cài đặt Docker trong máy EC2: 
+## Optinal 
+sudo apt-get update -y 
+sudo apt-get upgrade
+## Yêu cầu (vì Docker không có trong máy chủ EC2 của chúng tôi -[Docker --Version]) 
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker ubuntu 
+newgrp docker 
+
+29. Bước tiếp theo là kết nối GitHub với EC2 (Runner tự lưu trữ): 
+* Chọn dự án của bạn trên GitHub >> Chuyển đến Cài đặt >> Action >> Runner >> Người chạy tự lưu trữ mới 
+>> chọn HĐH (Linux) >> Bây giờ từng bước chạy tất cả các lệnh liên quan "Tải xuống" trên máy chủ EC2 
+>> Chạy lệnh "Cấu hình" đầu tiên (nhấn enter thay vì đặt nhóm người chạy, tên chạy: self-hosted) 
+>> Nhập bất kỳ nhãn bổ sung nào (nhấn Enter vào Skip) >> Tên của thư mục công việc (một lần nữa nhấn enter) 
+>> Bây giờ chạy lệnh "Cấu hình" thứ hai (./run.sh) và người chạy sẽ được kết nối với GitHub 
+>> để kiểm tra chéo, quay lại GitHub và nhấp vào Runner và bạn sẽ thấy Runner State là "idle" 
+>> Nếu bạn thực hiện Ctrl+C trên máy chủ EC2 thì Runner sẽ đóng lại sau đó khởi động lại với "./run.sh" 
+
+30. Thiết lập bí mật GitHub của bạn: (Dự án GitHub> Cài đặt> SecretandVarable> Action> NewReposeCret) 
+AWS_ACCESS_KEY_ID 
+AWS_SECRET_ACCESS_KEY 
+AWS_DEFAULT_REGION 
+ECR_REPO 
+
+31. Đường ống CI-CD sẽ được kích hoạt ở cam kết và đẩy tiếp theo. 
+32. Bây giờ chúng ta cần kích hoạt cổng 5000 của phiên bản EC2 của chúng ta: 
+* Chuyển đến phiên bản> Bảo mật> Truy cập các nhóm bảo mật> Chỉnh sửa quy tắc trong nước> Thêm quy tắc 
+> Loại: TCP tùy chỉnh> Phạm vi cổng: 5080> 0.0.0.0/0> Lưu quy tắc 
+33. Bây giờ dán địa chỉ IP công cộng trên thanh địa chỉ +: 5080 và ứng dụng của bạn sẽ được khởi chạy. 
+34. Bạn cũng có thể thực hiện đào tạo mô hình trên /đường đào tạo

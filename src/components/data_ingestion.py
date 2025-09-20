@@ -47,11 +47,11 @@ class DataIngestion:
 
     def split_data_as_train_test(self,dataframe: DataFrame) ->None:
         """
-        Method Name :   split_data_as_train_test
-        Description :   This method splits the dataframe into train set and test set based on split ratio 
-        
-        Output      :   Folder is created in s3 bucket
-        On Failure  :   Write an exception log and then raise an exception
+       Tên phương thức: split_data_as_train_test 
+Mô tả: Phương pháp này chia dữ liệu vào bộ tàu và bộ kiểm tra dựa trên tỷ lệ phân chia 
+
+Đầu ra: Thư mục được tạo trong thùng S3 
+Về thất bại: Viết nhật ký ngoại lệ và sau đó nâng một ngoại lệ
         """
         logging.info("Entered split_data_as_train_test method of Data_Ingestion class")
 
@@ -122,16 +122,16 @@ Về thất bại: Viết nhật ký ngoại lệ và sau đó nâng một ngo�
         """
         try:
             data_ingestion_artifact = self.start_data_ingestion()
-            data_validation_artifact = self.start_data_validation(data_ingestion_artifact=data_ingestion_artifact)
-            data_transformation_artifact = self.start_data_transformation(
-                data_ingestion_artifact=data_ingestion_artifact, data_validation_artifact=data_validation_artifact)
-            model_trainer_artifact = self.start_model_trainer(data_transformation_artifact=data_transformation_artifact)
-            model_evaluation_artifact = self.start_model_evaluation(data_ingestion_artifact=data_ingestion_artifact,
-                                                                    model_trainer_artifact=model_trainer_artifact)
-            if not model_evaluation_artifact.is_model_accepted:
-                logging.info(f"Model not accepted.")
-                return None
-            model_pusher_artifact = self.start_model_pusher(model_evaluation_artifact=model_evaluation_artifact)
+            # data_validation_artifact = self.start_data_validation(data_ingestion_artifact=data_ingestion_artifact)
+            # data_transformation_artifact = self.start_data_transformation(
+            #     data_ingestion_artifact=data_ingestion_artifact, data_validation_artifact=data_validation_artifact)
+            # model_trainer_artifact = self.start_model_trainer(data_transformation_artifact=data_transformation_artifact)
+            # model_evaluation_artifact = self.start_model_evaluation(data_ingestion_artifact=data_ingestion_artifact,
+            #                                                         model_trainer_artifact=model_trainer_artifact)
+            # if not model_evaluation_artifact.is_model_accepted:
+            #     logging.info(f"Model not accepted.")
+            #     return None
+            # model_pusher_artifact = self.start_model_pusher(model_evaluation_artifact=model_evaluation_artifact)
             
         except Exception as e:
             raise MyException(e, sys)
