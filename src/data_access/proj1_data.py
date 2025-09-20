@@ -27,15 +27,15 @@ class Proj1Data:
 
         Parameters:
         ----------
-        collection_name : str
-            The name of the MongoDB collection to export.
-        database_name : Optional[str]
-            Name of the database (optional). Defaults to DATABASE_NAME.
+        Collection_Name: str 
+Tên của bộ sưu tập MongoDB để xuất khẩu. 
+cơ sở dữ liệu_name: tùy chọn [str] 
+Tên của cơ sở dữ liệu (tùy chọn). Mặc định là Database_Name. 
 
-        Returns:
-        -------
-        pd.DataFrame
-            DataFrame containing the collection data, with '_id' column removed and 'na' values replaced with NaN.
+Trả lại: 
+------- 
+PD.DataFrame 
+DataFrame chứa dữ liệu thu thập, với cột '_id' bị xóa và các giá trị 'Na' được thay thế bằng NAN.
         """
         try:
             # Access specified collection from the default or specified database

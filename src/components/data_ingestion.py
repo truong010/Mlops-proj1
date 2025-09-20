@@ -13,7 +13,7 @@ from src.data_access.proj1_data import Proj1Data
 class DataIngestion:
     def __init__(self,data_ingestion_config:DataIngestionConfig=DataIngestionConfig()):
         """
-        :param data_ingestion_config: configuration for data ingestion
+        : param data_ingestion_config: cấu hình để nhập dữ liệu
         """
         try:
             self.data_ingestion_config = data_ingestion_config
@@ -74,11 +74,11 @@ class DataIngestion:
 
     def initiate_data_ingestion(self) ->DataIngestionArtifact:
         """
-        Method Name :   initiate_data_ingestion
-        Description :   This method initiates the data ingestion components of training pipeline 
-        
-        Output      :   train set and test set are returned as the artifacts of data ingestion components
-        On Failure  :   Write an exception log and then raise an exception
+       Tên phương thức: initiate_data_ingestion 
+Mô tả: Phương pháp này bắt đầu các thành phần nhập dữ liệu của đường ống đào tạo 
+
+Đầu ra: Bộ xe lửa và bộ kiểm tra được trả về dưới dạng vật phẩm của các thành phần nhập dữ liệu 
+Về thất bại: Viết nhật ký ngoại lệ và sau đó nâng một ngoại lệ
         """
         logging.info("Entered initiate_data_ingestion method of Data_Ingestion class")
 
@@ -103,7 +103,7 @@ class DataIngestion:
 
     def start_data_ingestion(self) -> DataIngestionArtifact:
         """
-        This method of TrainPipeline class is responsible for starting data ingestion component
+        Phương pháp của lớp Trainpipeline chịu trách nhiệm bắt đầu thành phần nhập dữ liệu
         """
         try:
             logging.info("Entered the start_data_ingestion method of TrainPipeline class")
@@ -118,20 +118,20 @@ class DataIngestion:
            
     def run_pipeline(self, ) -> None:
         """
-        This method of TrainPipeline class is responsible for running complete pipeline
+        Phương pháp của lớp Trainpipeline chịu trách nhiệm chạy đường ống hoàn chỉnh
         """
         try:
             data_ingestion_artifact = self.start_data_ingestion()
-            # data_validation_artifact = self.start_data_validation(data_ingestion_artifact=data_ingestion_artifact)
-            # data_transformation_artifact = self.start_data_transformation(
-            #     data_ingestion_artifact=data_ingestion_artifact, data_validation_artifact=data_validation_artifact)
-            # model_trainer_artifact = self.start_model_trainer(data_transformation_artifact=data_transformation_artifact)
-            # model_evaluation_artifact = self.start_model_evaluation(data_ingestion_artifact=data_ingestion_artifact,
-            #                                                         model_trainer_artifact=model_trainer_artifact)
-            # if not model_evaluation_artifact.is_model_accepted:
-            #     logging.info(f"Model not accepted.")
-            #     return None
-            # model_pusher_artifact = self.start_model_pusher(model_evaluation_artifact=model_evaluation_artifact)
+            data_validation_artifact = self.start_data_validation(data_ingestion_artifact=data_ingestion_artifact)
+            data_transformation_artifact = self.start_data_transformation(
+                data_ingestion_artifact=data_ingestion_artifact, data_validation_artifact=data_validation_artifact)
+            model_trainer_artifact = self.start_model_trainer(data_transformation_artifact=data_transformation_artifact)
+            model_evaluation_artifact = self.start_model_evaluation(data_ingestion_artifact=data_ingestion_artifact,
+                                                                    model_trainer_artifact=model_trainer_artifact)
+            if not model_evaluation_artifact.is_model_accepted:
+                logging.info(f"Model not accepted.")
+                return None
+            model_pusher_artifact = self.start_model_pusher(model_evaluation_artifact=model_evaluation_artifact)
             
         except Exception as e:
             raise MyException(e, sys)
